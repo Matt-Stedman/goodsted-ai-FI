@@ -12,7 +12,6 @@ def calculateScore(score_batch):
 
     return return_list
 
-
 def evaluateProfileAgainstOpportunities(profile: Profile, opportunities: List[Opportunity]) -> Opportunity:
     # Convert profile attributes to DataFrame
     profile_data = {
@@ -57,7 +56,13 @@ def evaluateProfileAgainstOpportunities(profile: Profile, opportunities: List[Op
         results_matrix[profile_element]["overall_score"] = calculateScore(
             results_matrix[profile_element])
 
-    print(profile_df)
-    print(results_matrix)
+    print("All options are")
+    for each in opportunities:
+        print(each.name)
+    for profile_element in profile_data.keys():
+        scores = results_matrix[profile_element]["overall_score"]
+        index = scores.index(max(scores))
+        print(f"Based on {profile_element} the best opportunity is {opportunities[index].name} with a score of {scores[index]}")
+        print(scores)
 
-    return opportunities[results_matrix[profile_element][opportunity_element].idxmax()]
+    # return opportunities[results_matrix[profile_element][opportunity_element].idxmax()]
