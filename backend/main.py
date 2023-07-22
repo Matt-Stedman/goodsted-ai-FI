@@ -25,6 +25,7 @@ if __name__ == "__main__":
             each_profile.loadFromDict(each)
             all_profiles.append(each_profile)
 
+
     best_opportunity = evaluateProfileAgainstOpportunities(
         all_profiles[0], all_opportunities[0: 25])
     

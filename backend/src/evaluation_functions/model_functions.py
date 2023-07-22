@@ -9,8 +9,8 @@ tokenizer = BertTokenizer.from_pretrained(model_name)
 model = BertModel.from_pretrained(model_name)
 
 
-def getSentenceEmbedding(sentence, model, tokenizer):
-    inputs = tokenizer(sentence, return_tensors="pt",
+def getSentenceEmbedding(sentences, model, tokenizer):
+    inputs = tokenizer(sentences, return_tensors="pt",
                        truncation=True, padding=True)
     with torch.no_grad():
         outputs = model(**inputs)

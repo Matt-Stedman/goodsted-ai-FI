@@ -2,8 +2,9 @@ import pandas as pd
 from src.custom_types import Opportunity, Profile
 from src.evaluation_functions.model_functions import evaluateSentenceAgainstListOfSentences
 from typing import List
+from src.logging.logging_functions import measure_elapsed_time
 
-
+@measure_elapsed_time
 def calculateScore(score_batch):
     return_list = []
     for each_element in range(0, len(score_batch[0])):
@@ -12,6 +13,7 @@ def calculateScore(score_batch):
 
     return return_list
 
+@measure_elapsed_time
 def evaluateProfileAgainstOpportunities(profile: Profile, opportunities: List[Opportunity]) -> Opportunity:
     # Convert profile attributes to DataFrame
     profile_data = {
