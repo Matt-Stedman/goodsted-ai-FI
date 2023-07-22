@@ -25,4 +25,5 @@ def getContextualSimilarity(sentence1, sentence2, model, tokenizer):
 
 
 def evaluateSentenceAgainstListOfSentences(profile_sentence: str, list_of_sentences: List[str]):
+    print(f"Runninng against {profile_sentence}")
     return [getContextualSimilarity(profile_sentence, sent, model, tokenizer) for sent in list_of_sentences]

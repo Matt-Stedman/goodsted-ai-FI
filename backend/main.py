@@ -27,6 +27,6 @@ if __name__ == "__main__":
 
 
     best_opportunity = evaluateProfileAgainstOpportunities(
-        all_profiles[0], all_opportunities[0: 25])
+        all_profiles[0], all_opportunities[0: 7])
     
     # print(best_opportunity)
