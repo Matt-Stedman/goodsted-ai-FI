@@ -1,5 +1,6 @@
 import pandas as pd
 from src.custom_types import Opportunity, Profile
+from src.evaluation_functions.preprocess_functions import preprocessText
 from src.evaluation_functions.model_functions import evaluateSentenceAgainstListOfSentences
 from typing import List
 from multiprocessing import Pool, cpu_count
@@ -19,21 +20,21 @@ def calculateScore(score_batch):
 def evaluateProfileAgainstOpportunities(profile: Profile, opportunities: List[Opportunity]) -> Opportunity:
     # Convert profile attributes to DataFrame
     profile_data = {
-        "about": [profile.about],
-        "openTo": ["What's needed: " + ", ".join(profile.openTo)],
-        "skills": ["Skills needed are: " + ", ".join(profile.skills)],
-        "industryInterests": ["Industries relevant: " + ", ".join(profile.industryInterests)],
-        "causeInterests": ["Causes: " + ", ".join(profile.causeInterests)]
+        "about": [preprocessText(profile.about)],
+        "openTo": [preprocessText("What's needed: " + ", ".join(profile.openTo))],
+        "skills": [preprocessText("Skills needed are: " + ", ".join(profile.skills))],
+        "industryInterests": [preprocessText("Industries relevant: " + ", ".join(profile.industryInterests))],
+        "causeInterests": [preprocessText("Causes: " + ", ".join(profile.causeInterests))]
     }
     profile_df = pd.DataFrame(profile_data)
 
     # Convert opportunities attributes to DataFrame
     opportunities_data = {
-        "problem": [each.problem for each in opportunities],
-        "need": [each.need for each in opportunities],
-        "plan": [each.plan for each in opportunities],
-        "why": [each.why for each in opportunities],
-        "description": [each.description for each in opportunities]
+        "problem": [preprocessText(each.problem) for each in opportunities],
+        "need": [preprocessText(each.need) for each in opportunities],
+        "plan": [preprocessText(each.plan) for each in opportunities],
+        "why": [preprocessText(each.why) for each in opportunities],
+        "description": [preprocessText(each.description) for each in opportunities]
     }
     opportunities_df = pd.DataFrame(opportunities_data)
 
