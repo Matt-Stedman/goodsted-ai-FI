@@ -1,11 +1,12 @@
 import pandas as pd
 from src.custom_types import Opportunity, Profile
-from src.evaluation_functions.preprocess_functions import preprocessText
+from src.evaluation_functions.preprocess_functions import wordContractions
 from src.evaluation_functions.model_functions import evaluateSentenceAgainstListOfSentences
 from typing import List
 from multiprocessing import Pool, cpu_count
 from src.logging.logging_functions import measure_elapsed_time
 
+preprocessText: callable = wordContractions
 
 def calculateScore(score_batch):
     return_list = []
