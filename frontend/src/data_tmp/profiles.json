@@ -1,49 +1,42 @@
-{
-    "profiles": [
-        {
-            "id": 0,
-            "name": "Matthew Stedman",
-            "profession": "Engineer",
-            "town": "Paris",
-            "country": "France",
-            "about": "Why did I sign up to Goodsted? I love editing videos and producing fun 15 minute interviews!",
-            "featured": null,
-            "groups": [0],
-            "opportunitiesParticipating": [
-                "ckzqzfewoires0106uk207ym3",
-                "nt7kxqgs1huv03yp6ny37cx0o",
-                "ckobp5pu3yuyz0106xvcfu6mf"
-            ],
-            "openTo": [
-                "Volunteering",
-                "Offering mentoring",
-                "Sharing ideas & brainstorming",
-                "Collaborating with others"
-            ],
-            "skills": [
-                "Product Design",
-                "Business Development",
-                "Engineering",
-                "Entrepreneurship",
-                "Design",
-                "Software Development",
-                "Prototyping"
-            ],
-            "languages": ["English", "French"],
-            "industryInterests": [
-                "Aviation & Aerospace",
-                "Electrical/Electronic Manufacturing",
-                "Higher Education",
-                "Mechanical or Industrial Engineering",
-                "Renewables & Environment"
-            ],
-            "causeInterests": [
-                "Food & Agriculture",
-                "Employment & Economic Growth",
-                "Innovation & Infrastructure",
-                "Environment & Sustainability",
-                "Mental Wellness & Resilience"
-            ]
-        }
-    ]
-}
+[
+    {
+        "id": 0,
+        "name": "Matthew Stedman",
+        "profession": "Engineer",
+        "town": "Paris",
+        "country": "France",
+        "about": "Why did I sign up to Goodsted? I love editing videos and producing fun 15 minute interviews!",
+        "featured": null,
+        "groups": [0],
+        "opportunitiesParticipating": [
+            "ckzqzfewoires0106uk207ym3",
+            "nt7kxqgs1huv03yp6ny37cx0o",
+            "ckobp5pu3yuyz0106xvcfu6mf"
+        ],
+        "openTo": ["Volunteering", "Offering mentoring", "Sharing ideas & brainstorming", "Collaborating with others"],
+        "skills": [
+            "Product Design",
+            "Business Development",
+            "Engineering",
+            "Entrepreneurship",
+            "Design",
+            "Software Development",
+            "Prototyping"
+        ],
+        "languages": ["English", "French"],
+        "industryInterests": [
+            "Aviation & Aerospace",
+            "Electrical/Electronic Manufacturing",
+            "Higher Education",
+            "Mechanical or Industrial Engineering",
+            "Renewables & Environment"
+        ],
+        "causeInterests": [
+            "Food & Agriculture",
+            "Employment & Economic Growth",
+            "Innovation & Infrastructure",
+            "Environment & Sustainability",
+            "Mental Wellness & Resilience"
+        ]
+    }
+]
