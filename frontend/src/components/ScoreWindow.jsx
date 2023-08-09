@@ -33,7 +33,7 @@ const ScoreWindow = (props) => {
                 key={score_element}
                 sx={{
                     position: "relative",
-                    padding: "10px",
+                    padding: "5px",
                     flex: "0 0 calc(20% - 20px)",
                     boxSizing: "border-box",
                     boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.2)",
@@ -48,6 +48,7 @@ const ScoreWindow = (props) => {
                     value={scores[score_element].score}
                     sx={{
                         color: colourant(scores[score_element].score), // Apply the custom color to the CircularProgress
+                        marginTop: "10px"
                     }}
                 />
                 {scores[score_element].reason && (

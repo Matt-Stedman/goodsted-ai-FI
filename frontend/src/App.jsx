@@ -14,6 +14,7 @@ import "./styles/App.css";
 import opportunities from "./data_tmp/opportunities.json";
 import profiles from "./data_tmp/profiles.json";
 import Opportunity from "./components/Opportunity";
+import MyProfile from "./components/MyProfile";
 
 const App = () => {
     const [batchOpportunities, setBatchOpportunities] = useState([]);
@@ -26,9 +27,7 @@ const App = () => {
      * Handle the changing of tabs
      */
     const handleTabChange = (event, newValue) => {
-        setTimeout(() => {
-            setCurrentOpportunity(newValue);
-        }, 100); // Delayed update to wait for 500ms after the action is completed
+        setCurrentOpportunity(newValue);
     };
 
     // Helper function
@@ -68,6 +67,7 @@ const App = () => {
                 <TabContext value={`${currentOpportunity}`}>
                     <Box sx={{ borderBottom: 1, borderColor: "divider", display: "flex", justifyContent: "center" }}>
                         <Tabs value={`${currentOpportunity}`} onChange={handleTabChange}>
+                            <Tab label="My profile" value={"100"} key={100} />
                             {Object.keys(batchScores).map((id, index) => (
                                 <Tab
                                     label={`${index}` === currentOpportunity ? "🟢" : "🔴"}
@@ -77,6 +77,13 @@ const App = () => {
                             ))}
                         </Tabs>
                     </Box>
+                    <TabPanel
+                        style={{ padding: 10, justifyContent: "center", margin: "auto", width: "50%" }}
+                        value={"100"}
+                        key={100}
+                    >
+                        <MyProfile profile={profile} />
+                    </TabPanel>
                     {Object.keys(batchScores).map((id, index) => (
                         <TabPanel
                             style={{ padding: 10, justifyContent: "center", margin: "auto", width: "50%" }}
