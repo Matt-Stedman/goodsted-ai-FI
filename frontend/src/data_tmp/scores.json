@@ -1,0 +1,29 @@
+[
+    {
+        "profile": 0,
+        "opportunities": [
+            {
+                "id": "2fcc9bznktnkkinfz6evutg1q",
+                "about": {
+                    "score": 70,
+                    "reason": "Your love for editing videos and producing fun interviews aligns with the opportunity's need for mixed media content creation.",
+                    "feedback": "1"
+                },
+                "openTo": {
+                    "score": 90,
+                    "reason": "Your openness to volunteering, mentoring, sharing ideas, and collaborating aligns with the opportunity's need for students to contribute their skills.",
+                    "feedback": "-1"
+                },
+                "skills": {
+                    "score": 50,
+                    "reason": "While your skills in product design, business development, engineering, entrepreneurship, design, software development, and prototyping may not directly match the content creation needs, your proficiency in video editing and content production does align."
+                },
+                "industryInterests": {
+                    "score": 30,
+                    "reason": "Your interests in aviation & aerospace, electrical/electronic manufacturing, higher education, mechanical or industrial engineering, and renewables & environment do not strongly align with the opportunity in social impact content creation."
+                },
+                "upToDate": true
+            }
+        ]
+    }
+]

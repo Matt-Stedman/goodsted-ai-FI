@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, CircularProgress } from "@mui/material";
 import { colourant } from "../functions/colouring";
+import { giveFeedbackToScore } from "../functions/backend";
 
 const ScoreWindow = (props) => {
     const [scores, setScores] = useState(props.scores);
     const [timeoutId, setTimeoutId] = useState(null);
 
+    // Handle the mouse going over a score element to reveal the reason
     const handleMouseEnter = (score_element) => {
         if (timeoutId) {
             clearTimeout(timeoutId);
@@ -20,6 +22,7 @@ const ScoreWindow = (props) => {
         setScores(updatedScores);
     };
 
+    // Handle the mouse leaving a score element to hide the reason
     const handleMouseLeave = (score_element) => {
         const newTimeoutId = setTimeout(() => {
             setScores({ ...scores, [score_element]: { ...scores[score_element], showReason: false } });
@@ -27,6 +30,9 @@ const ScoreWindow = (props) => {
         setTimeoutId(newTimeoutId);
     };
 
+    // Add a score to the reason for future
+
+    // Circular element wrapper with better stylings and better functionality
     const circularElement = (score_element, title) => {
         return (
             <Box
@@ -48,7 +54,7 @@ const ScoreWindow = (props) => {
                     value={scores[score_element].score}
                     sx={{
                         color: colourant(scores[score_element].score), // Apply the custom color to the CircularProgress
-                        marginTop: "10px"
+                        marginTop: "10px",
                     }}
                 />
                 {scores[score_element].reason && (
@@ -77,8 +83,20 @@ const ScoreWindow = (props) => {
                                 justifyContent: "space-between",
                             }}
                         >
-                            <Button>👍</Button>
-                            <Button>👎</Button>
+                            <Button
+                                onClick={() => {
+                                    giveFeedbackToScore(scores[score_element], 1);
+                                }}
+                            >
+                                👍
+                            </Button>
+                            <Button
+                                onClick={() => {
+                                    giveFeedbackToScore(scores[score_element], -1);
+                                }}
+                            >
+                                👎
+                            </Button>
                         </div>
                     </div>
                 )}
@@ -86,6 +104,7 @@ const ScoreWindow = (props) => {
         );
     };
 
+    // Return all elements as the list
     return (
         <Box sx={{ padding: "10px", display: "flex", flexWrap: "wrap" }}>
             <div style={{ marginRight: "50px" }}>{circularElement("average", "General fit")}</div>
