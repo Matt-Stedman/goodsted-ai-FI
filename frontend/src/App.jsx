@@ -10,14 +10,16 @@ import "./styles/App.css";
 // Load data (will be on a backend soon enough)
 import Opportunity from "./components/Opportunity";
 import MyProfile from "./components/MyProfile";
-import { getBatchOfOpportunities, getScoresForOpportunities, getUserProfile } from "./functions/backend";
+import { getBatchOfOpportunities, getUserProfiles } from "./functions/Airtable";
+import { getScoresForOpportunities } from "./functions/backend";
 
 const App = () => {
     const [batchOpportunities, setBatchOpportunities] = useState([]);
     const [batchScores, setBatchScores] = useState({});
     const [currentOpportunity, setCurrentOpportunity] = useState("0");
+    const [allUserProfiles, setAllUserProfiles] = useState([]);
 
-    const [profile, setProfile] = useState();
+    const [profile, setProfile] = useState({});
 
     /**
      * Handle the changing of tabs
@@ -33,17 +35,38 @@ const App = () => {
 
     // Load up the opportunities
     useState(() => {
-        setBatchOpportunities(getBatchOfOpportunities(0));
+        getBatchOfOpportunities().then((opportunities) => {
+            console.log(opportunities);
+            setBatchOpportunities(opportunities);
+        });
     }, []);
 
     useState(() => {
-        setProfile(getUserProfile(0));
+        getUserProfiles().then((tmp_profiles) => {
+            setAllUserProfiles(tmp_profiles);
+            setProfile(tmp_profiles[0]);
+        });
     }, []);
+
+    const changeToProfile = (index) => {
+        if (allUserProfiles.length) {
+            setProfile(allUserProfiles[index]);
+        }
+    };
 
     // Load up the scores
     useEffect(() => {
-        getScoresForOpportunities(profile, batchOpportunities).then((tmp_scores) => setBatchScores(tmp_scores)); // Set the updated batchScores
-    }, [batchOpportunities]);
+        if (batchOpportunities.length && profile.id !== null) {
+            console.log("Hi bitches")
+            getScoresForOpportunities(profile, batchOpportunities).then((tmp_scores) => {
+                console.log(tmp_scores);
+                setBatchScores(tmp_scores);
+            }); // Set the updated batchScores
+        } else {
+            console.log("batchOpportunities: ", batchOpportunities.keys.length)
+            console.log("profile: ", profile?.id)
+        }
+    }, [profile, batchOpportunities]);
 
     return (
         <div className="App">
@@ -81,7 +104,7 @@ const App = () => {
                 </TabContext>
             ) : (
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "95vh" }}>
-                    Loading
+                    Loading..
                 </div>
             )}
         </div>
