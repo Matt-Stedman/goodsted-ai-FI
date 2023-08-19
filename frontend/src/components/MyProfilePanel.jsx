@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 
-const MyProfile = (props) => {
-    return (
+const MyProfilePanel = (props) => {
+    useEffect(() => {
+        console.log("Profile is: ", props.profile);
+    }, [props.profile]);
+    return props.profile?.name ? (
         <div style={{ width: "100%", justifyContent: "center" }}>
             <h2>{props.profile.name}</h2>
             <Box>
@@ -22,6 +25,8 @@ const MyProfile = (props) => {
                 <div>{props.profile.causeInterests.join(", ")}</div>
             </Box>
         </div>
+    ) : (
+        <div>Hi!</div>
     );
 };
-export default MyProfile;
+export default MyProfilePanel;

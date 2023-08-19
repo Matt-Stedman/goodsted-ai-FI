@@ -1,0 +1,1 @@
+export const AIRTABLE_KEY = "pat9SkY7ry61D25lK.72f7ff810592f9727bb4ce6aed0417fc8f576bb26d243f1d2ca07442c5f980cb";

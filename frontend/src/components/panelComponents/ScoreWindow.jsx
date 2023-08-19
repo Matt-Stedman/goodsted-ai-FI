@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, CircularProgress } from "@mui/material";
-import { colourant } from "../functions/colouring";
-import { giveFeedbackToScore } from "../functions/backend";
+import { colourant } from "../../functions/colouring";
+import { giveFeedbackToScore } from "../../functions/backend";
 
 const ScoreWindow = (props) => {
     const [scores, setScores] = useState(props.scores);
