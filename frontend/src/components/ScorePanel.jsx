@@ -1,8 +1,11 @@
 // Load react elements
 import React, { useEffect, useState } from "react";
-import { Box, Tab, Tabs } from "@mui/material";
+import { Box, Button, Tab, Tabs, Tooltip } from "@mui/material";
 import { TabContext, TabPanel } from "@mui/lab";
 import ScoreWindow from "./panelComponents/ScoreWindow";
+
+// Load styles
+import "../styles/App.css";
 
 // Load data (will be on a backend soon enough)
 import Opportunity from "./panelComponents/Opportunity";
@@ -28,19 +31,28 @@ const ScorePanel = (props) => {
     };
 
     return (
-        <div className="App">
+        <div style={{ width: "100%" }}>
+            <span style={{position: "relative", left:"-25%", fontSize: "0.75em", marginTop: 0, color: "grey"}}>
+                Logged on as: {props.profile.fields.name}
+                </span>
             {displayOpportunities() ? (
                 <TabContext value={`${currentOpportunity}`}>
                     <Box sx={{ borderBottom: 1, borderColor: "divider", display: "flex", justifyContent: "center" }}>
                         <Tabs value={`${currentOpportunity}`} onChange={handleTabChange}>
                             {Object.keys(props.batchScores).map((id, index) => (
-                                <Tab label={props.batchScores[id].average.score} value={`${index}`} key={index} />
+                                <Tab
+                                    label={props.batchScores[id].average.score}
+                                    value={`${index}`}
+                                    key={index}
+                                    title={props.batchOpportunities[index].fields.name}
+                                />
                             ))}
                         </Tabs>
+                        <Button onClick={props.loadMoreOpportunities}>Load 5 more...</Button>
                     </Box>
                     {props.batchOpportunities.map((each_op, index) => (
                         <TabPanel
-                            style={{ padding: 10, justifyContent: "center", margin: "auto", width: "50%" }}
+                            style={{ padding: 10, justifyContent: "center", margin: "auto" }}
                             value={`${index}`}
                             key={index}
                         >
@@ -50,9 +62,7 @@ const ScorePanel = (props) => {
                     ))}
                 </TabContext>
             ) : (
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "95vh" }}>
-                    Loading..
-                </div>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>Loading scores...</div>
             )}
         </div>
     );
