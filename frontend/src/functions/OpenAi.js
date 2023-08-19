@@ -25,12 +25,16 @@ export const profile_elements_AI = [
 export async function scoreOpportunityAgainstProfile(opportunity, profile) {
     // both opportunity and profile come in as a plain dict
 
-    console.log("Opportunity: ", opportunity);
-    console.log("Profile: ", profile);
+    // console.log("Opportunity: ", opportunity);
+    // console.log("Profile: ", profile);
 
     // STEP 1 - Unpack the relevant opportunity and profile elements as a string
-    const opportunity_string = opportunity_elements_AI.map((op) => `${op}: ${opportunity[op]}\n`);
-    const profile_string = profile_elements_AI.map((pr) => `${pr}: ${profile[pr]}\n`);
+    if (opportunity.fields === null || profile.fields === null) {
+        return null;
+    }
+
+    const opportunity_string = opportunity_elements_AI.map((op) => `${op}: ${opportunity.fields[op]}\n`);
+    const profile_string = profile_elements_AI.map((pr) => `${pr}: ${profile.fields[pr]}\n`);
 
     // STEP 2 - Compile the prompt
     const prompt = `
@@ -56,7 +60,7 @@ export async function scoreOpportunityAgainstProfile(opportunity, profile) {
     
         `;
 
-    console.log(prompt);
+    // console.log(prompt);
     // STEP 3 - Get the results
     const response = await chatGPTClient.post("/", {
         messages: [{ role: "user", content: prompt }],
@@ -67,23 +71,27 @@ export async function scoreOpportunityAgainstProfile(opportunity, profile) {
 
     // TODO STEP 5 - Put in the 👍 and 👎 scores, either here or as weights on the other side?
 
-    console.log(response);
+    // console.log(response);
 
-    try {
-        var scores = JSON.parse(response.data.choices[0].message.content);
-
-        // Calculate the average score
-        var totalScores = Object.values(scores).reduce((total, sc) => total + sc.score, 0);
-        var numberOfCategories = Object.keys(scores).length;
-        var averageScore = totalScores / numberOfCategories;
-
-        scores["average"] = { score: averageScore };
-
-        console.log("Average Score:", averageScore);
-
-        return scores;
-    } catch {
-        console.log(`Failed to get a scoring for ${opportunity.id}`);
+    const potential_scores = response.data.choices[0].message.content.split("\n\n");
+    var scores;
+    potential_scores.map((each_potential_score) => {
+        try {
+            scores = JSON.parse(each_potential_score);
+        } catch {}
+    });
+    if (!scores) {
         return null;
     }
+
+    // Calculate the average score
+    var totalScores = Object.values(scores).reduce((total, sc) => total + sc.score, 0);
+    var numberOfCategories = Object.keys(scores).length;
+    var averageScore = totalScores / numberOfCategories;
+
+    scores["average"] = { score: averageScore };
+
+    // console.log("Average Score:", averageScore);
+
+    return scores;
 }

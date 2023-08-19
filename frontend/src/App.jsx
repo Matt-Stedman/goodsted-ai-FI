@@ -11,7 +11,7 @@ import "./styles/App.css";
 import Opportunity from "./components/Opportunity";
 import MyProfile from "./components/MyProfile";
 import { getBatchOfOpportunities, getUserProfiles } from "./functions/Airtable";
-import { getScoresForOpportunities } from "./functions/backend";
+import { getScoreId, getScoresForOpportunities } from "./functions/backend";
 
 const App = () => {
     const [batchOpportunities, setBatchOpportunities] = useState([]);
@@ -56,17 +56,13 @@ const App = () => {
 
     // Load up the scores
     useEffect(() => {
-        if (batchOpportunities.length && profile.id !== null) {
-            console.log("Hi bitches")
+        if (batchOpportunities.length && profile.id != null && profile?.fields?.about != null) {
             getScoresForOpportunities(profile, batchOpportunities).then((tmp_scores) => {
-                console.log(tmp_scores);
+                console.log("batchScores:", tmp_scores);
                 setBatchScores(tmp_scores);
             }); // Set the updated batchScores
-        } else {
-            console.log("batchOpportunities: ", batchOpportunities.keys.length)
-            console.log("profile: ", profile?.id)
         }
-    }, [profile, batchOpportunities]);
+    }, [batchOpportunities]);
 
     return (
         <div className="App">
@@ -89,16 +85,16 @@ const App = () => {
                         value={"100"}
                         key={100}
                     >
-                        <MyProfile profile={profile} />
+                        <MyProfile profile={profile.fields} />
                     </TabPanel>
-                    {Object.keys(batchScores).map((id, index) => (
+                    {batchOpportunities.map((each_op, index) => (
                         <TabPanel
                             style={{ padding: 10, justifyContent: "center", margin: "auto", width: "50%" }}
                             value={`${index}`}
                             key={index}
                         >
-                            <ScoreWindow scores={batchScores[id]} />
-                            <Opportunity opportunity={batchOpportunities.find((op) => op.id === id)} />
+                            <ScoreWindow scores={batchScores[getScoreId(profile.id, each_op.id)]} />
+                            <Opportunity opportunity={each_op.fields} />
                         </TabPanel>
                     ))}
                 </TabContext>
