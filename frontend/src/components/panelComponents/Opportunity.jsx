@@ -3,24 +3,27 @@ import { Box } from "@mui/material";
 
 const Opportunity = (props) => {
     return (
-        <div style={{ width: "100%", justifyContent: "center" }}>
+        <Box
+            sx={{
+                display: "grid",
+                gridTemplateColumns: "repeat(2, 1fr)", // Two columns
+                gap: "10px", // Gap between items
+            }}
+        >
             <h1>{props.opportunity["name"]}</h1>
-            <img src={props.opportunity["image"]} width="50%" />
+            <img src={props.opportunity["image"]} width="100%" />
             {["about", "description", "need", "problem", "why"].map((each_it) => (
                 <Box
                     key={each_it}
                     sx={{
-                        position: "relative",
                         padding: "10px",
-                        boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.1)",
-                        margin: "5px",
                     }}
                 >
                     <h2>{each_it}</h2>
                     <span>{props.opportunity[each_it]}</span>
                 </Box>
             ))}
-        </div>
+        </Box>
     );
 };
 export default Opportunity;

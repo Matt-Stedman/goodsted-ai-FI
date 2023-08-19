@@ -24,11 +24,13 @@ export async function getUserProfiles() {
  */
 export async function getBatchOfOpportunities(ignore = []) {
     const query = ignore.length
-        ? `/tblL4oLO9wLy61dVB?maxRecords=2?filterByFormula=AND(${ignore.map((ig) => `NOT({id}="${ig}")`).join(", ")})`
-        : "/tblL4oLO9wLy61dVB?maxRecords=2";
-    // console.log("getBatchOfOpportunities, query:", query);
+        ? `/tblL4oLO9wLy61dVB?maxRecords=5&filterByFormula=AND(${ignore
+              .map((ig) => `{id}!="${ig.fields.id}"`)
+              .join(", ")})`
+        : "/tblL4oLO9wLy61dVB?maxRecords=5";
+    console.log("getBatchOfOpportunities, query:", query);
     const response = await apiClient.get(query);
-    // console.log("getBatchOfOpportunities, response:", response);
+    console.log("getBatchOfOpportunities, response:", response);
 
     return response.data.records;
 }
@@ -91,18 +93,18 @@ function createFieldsForOpportunity(profile, opportunity, score) {
         id: getScoreId(profile.id, opportunityId),
         Profile: [profile.id], // Use an array here
         Opportunity: [opportunityId], // Use an array here
-        about: fields.about.score,
-        openTo: fields.openTo.score,
-        skills: fields.skills.score,
-        industryInterests: fields.industryInterests.score,
-        about_reason: fields.about.reason,
-        openTo_reason: fields.openTo.reason,
-        skills_reason: fields.skills.reason,
-        industryInterests_reason: fields.industryInterests.reason,
-        about_feedback: fields.about.feedback ?? 0,
-        openTo_feedback: fields.openTo.feedback ?? 0,
-        skills_feedback: fields.skills.feedback ?? 0,
-        industryInterests_feedback: fields.industryInterests.feedback ?? 0,
+        about: fields?.about?.score,
+        openTo: fields?.openTo?.score,
+        skills: fields?.skills?.score,
+        industryInterests: fields?.industryInterests?.score,
+        about_reason: fields?.about?.reason,
+        openTo_reason: fields?.openTo?.reason,
+        skills_reason: fields?.skills?.reason,
+        industryInterests_reason: fields?.industryInterests?.reason,
+        about_feedback: fields?.about?.feedback ?? 0,
+        openTo_feedback: fields?.openTo?.feedback ?? 0,
+        skills_feedback: fields?.skills?.feedback ?? 0,
+        industryInterests_feedback: fields?.industryInterests?.feedback ?? 0,
     };
 }
 
