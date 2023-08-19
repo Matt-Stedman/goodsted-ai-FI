@@ -24,6 +24,7 @@ export const getScoresForOpportunities = async (profile, opportunities) => {
             updatedBatchScores[`${getScoreId(profile.id, each_op.id)}`] = new_score; // Update the score for the opportunity ID
         } else {
             console.log(`We already have a score for ${each_op.id}`);
+            console.log(`scoresExistArray[${index}]`, scoresExistArray[index])
             updatedBatchScores[`${getScoreId(profile.id, each_op.id)}`] = scoresExistArray[index]; // Update the score for the opportunity ID
         }
     });
