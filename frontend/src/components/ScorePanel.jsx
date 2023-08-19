@@ -32,19 +32,20 @@ const ScorePanel = (props) => {
 
     return (
         <div style={{ width: "100%" }}>
-            <span style={{position: "relative", left:"-25%", fontSize: "0.75em", marginTop: 0, color: "grey"}}>
+            <span style={{ position: "relative", left: "-25%", fontSize: "0.75em", marginTop: 0, color: "grey" }}>
                 Logged on as: {props.profile.fields.name}
-                </span>
+            </span>
             {displayOpportunities() ? (
                 <TabContext value={`${currentOpportunity}`}>
                     <Box sx={{ borderBottom: 1, borderColor: "divider", display: "flex", justifyContent: "center" }}>
                         <Tabs value={`${currentOpportunity}`} onChange={handleTabChange}>
-                            {Object.keys(props.batchScores).map((id, index) => (
+                            {props.batchOpportunities.map((each_op, index) => (
+                                // {Object.keys(props.batchScores).map((id, index) => (
                                 <Tab
-                                    label={props.batchScores[id].average.score}
+                                    label={props.batchScores[getScoreId(props.profile.id, each_op.id)]?.average?.score}
                                     value={`${index}`}
                                     key={index}
-                                    title={props.batchOpportunities[index].fields.name}
+                                    title={each_op.fields.name}
                                 />
                             ))}
                         </Tabs>

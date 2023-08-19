@@ -51,9 +51,9 @@ const ScoreWindow = (props) => {
                 {title} <br />
                 <CircularProgress
                     variant="determinate"
-                    value={scores[score_element].score}
+                    value={scores[score_element]?.score}
                     sx={{
-                        color: colourant(scores[score_element].score), // Apply the custom color to the CircularProgress
+                        color: colourant(scores[score_element]?.score), // Apply the custom color to the CircularProgress
                         marginTop: "10px",
                     }}
                 />
@@ -69,7 +69,7 @@ const ScoreWindow = (props) => {
                             borderRadius: "5px",
                             boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.2)",
                             left: "50%",
-                            transform: scores[score_element].showReason
+                            transform: scores[score_element]?.showReason
                                 ? "translateX(-50%) translateY(-10px)"
                                 : "translateX(-50%) translateY(-1000px)",
                             transition: "transform 0.3s ease-in-out",
