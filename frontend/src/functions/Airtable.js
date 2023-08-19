@@ -28,9 +28,9 @@ export async function getBatchOfOpportunities(ignore = []) {
               .map((ig) => `{id}!="${ig.fields.id}"`)
               .join(", ")})`
         : "/tblL4oLO9wLy61dVB?maxRecords=5";
-    console.log("getBatchOfOpportunities, query:", query);
+    // console.log("getBatchOfOpportunities, query:", query);
     const response = await apiClient.get(query);
-    console.log("getBatchOfOpportunities, response:", response);
+    // console.log("getBatchOfOpportunities, response:", response);
 
     return response.data.records;
 }

@@ -38,33 +38,37 @@ export async function scoreOpportunityAgainstProfile(opportunity, profile) {
 
     // STEP 2 - Compile the prompt
     const prompt = `
-    I need a rigorous evaluation of my volunteering profile's fit with this opportunity. Please be critical and precise, aiming to identify only the best-aligned opportunities.
-    Your feedback should be data-driven and rigorous, with a focus on strong alignment, and personal to me and my profile, using the second person!
-    
-    Evaluate my profile's elements based on a JSON-parsable format:
-    {
-        ${profile_elements_AI.map(
-            (pr) => `"${pr}": {
-            "score": [0 to 100],
-            "reason": [Up to 20 words]
-        },
-        `
-        )}
-    }
-    
-    MY PROFILE:
-    ${profile_string}
-    
-    OPPORTUNITY:
-    ${opportunity_string}
-    
-        `;
+Evaluate Profile-Opportunity Alignment with Rigorous Analysis
 
-    // console.log(prompt);
+Profile Evaluation Instructions:
+Please provide a meticulous evaluation of how well my volunteering profile aligns with the given opportunity. Be highly critical and specific, focusing on strong alignments. You can be friendly referring to me as "you". Base your assessment strictly on the provided information. If any information is missing, treat it as a deficiency and evaluate it accordingly.
+If any either my fields or the opportunity's fields are undefined or less than 20 words then I expect a very cautious and skeptical evaluation. Focus on thorough analysis and highlight potential mismatches or uncertainties in the opportunity details.
+
+Scoring Format:
+Provide evaluations for the following elements in a JSON-parsable format:
+{
+    ${profile_elements_AI.map(
+        (pr) => `"${pr}": {
+        "score": [0 to 100],
+        "reason": [Up to 20 words]
+    },
+    `
+    )}
+}
+
+Profile Information:
+${profile_string}
+
+Opportunity Information:
+${opportunity_string}
+
+    `;
+
+    console.log(prompt);
     // STEP 3 - Get the results
     const response = await chatGPTClient.post("/", {
         messages: [{ role: "user", content: prompt }],
-        model: "gpt-3.5-turbo",
+        model: "gpt-4",
     });
 
     // TODO STEP 4 - Unpack the pastOpportunityScores
