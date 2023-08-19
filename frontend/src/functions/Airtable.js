@@ -42,13 +42,13 @@ export async function doScoresExistForOpportunies(profile, opportunities, unpack
         .map((id) => `FIND("${id}", {Opportunity})`)
         .join(", ")}))`;
 
-    console.log("query:", query);
+    // console.log("query:", query);
 
     const response = await apiClient.get(query);
 
     const unpackRecordScoreToDict = (record) => {
         let return_unpacked = {};
-        console.log("Record is: ", record);
+        // console.log("Record is: ", record);
         const fields = ["about", "openTo", "skills", "industryInterests"];
         fields.map((field) => {
             return_unpacked[field] = {
@@ -65,13 +65,13 @@ export async function doScoresExistForOpportunies(profile, opportunities, unpack
     };
 
     const scoresExistArray = opportunities.map((opportunity) => {
-        console.log(`Checking ${getScoreId(profile.id, opportunity.id)} against: `, response.data.records);
+        // console.log(`Checking ${getScoreId(profile.id, opportunity.id)} against: `, response.data.records);
         const opportunityRecords = response.data.records.filter(
             (record) => record.fields.id === getScoreId(profile.id, opportunity.id)
         );
 
-        console.log("opportunityRecords", opportunityRecords);
-        console.log("opportunityRecords[0]", opportunityRecords[0]);
+        // console.log("opportunityRecords", opportunityRecords);
+        // console.log("opportunityRecords[0]", opportunityRecords[0]);
         if (opportunityRecords.length > 0) {
             return unpack ? unpackRecordScoreToDict(opportunityRecords[0]) : opportunityRecords[0];
         } else {
@@ -79,14 +79,14 @@ export async function doScoresExistForOpportunies(profile, opportunities, unpack
         }
     });
 
-    console.log("scoresExistArray: ", scoresExistArray);
+    // console.log("scoresExistArray: ", scoresExistArray);
     return scoresExistArray;
 }
 
 function createFieldsForOpportunity(profile, opportunity, score) {
     const opportunityId = opportunity.id;
     const fields = score;
-    console.log("Fields: ", fields);
+    // console.log("Fields: ", fields);
     return {
         id: getScoreId(profile.id, opportunityId),
         Profile: [profile.id], // Use an array here
@@ -112,14 +112,14 @@ function createFieldsForOpportunity(profile, opportunity, score) {
 export async function setScoreForOpportunities(profile, opportunities, new_scores) {
     // Create the score, assuming it doesn't exist
     const query = `/tblsiIFBis29HTU14`;
-    console.log("Opportunities: ", opportunities);
-    console.log("Scores: ", new_scores);
+    // console.log("Opportunities: ", opportunities);
+    // console.log("Scores: ", new_scores);
 
     let post_records = []; // Used to create new records
     let put_records = []; // Used to update existing records
 
     const existing_records = await doScoresExistForOpportunies(profile, opportunities, false);
-    console.log("Existing records", existing_records);
+    // console.log("Existing records", existing_records);
 
     opportunities.map((opportunity) => {
         const score_id = getScoreId(profile.id, opportunity.id);
@@ -128,13 +128,13 @@ export async function setScoreForOpportunities(profile, opportunities, new_score
         const fields = createFieldsForOpportunity(profile, opportunity, new_scores[score_id]);
 
         if (existing_record) {
-            console.log("Pushing ", `${existing_record.id} for ${score_id}`, " because it already exists.");
+            // console.log("Pushing ", `${existing_record.id} for ${score_id}`, " because it already exists.");
             put_records.push({
                 id: existing_record.id,
                 fields: fields,
             });
         } else {
-            console.log("Posting ", score_id, " because it doesn't yet exist.");
+            // console.log("Posting ", score_id, " because it doesn't yet exist.");
             post_records.push({
                 fields: fields,
             });
@@ -144,14 +144,12 @@ export async function setScoreForOpportunities(profile, opportunities, new_score
     // Now you can proceed with post_records and push_records as needed
 
     if (put_records.length) {
-        console.log("put_records: ", put_records)
         await apiClient.put(query, {
             records: put_records, // Use the constructed records array
         });
     }
 
     if (post_records.length) {
-        console.log("post_records: ", post_records)
         await apiClient.post(query, {
             records: post_records, // Use the constructed records array
         });

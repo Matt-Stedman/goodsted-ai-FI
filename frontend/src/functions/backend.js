@@ -20,11 +20,11 @@ export const getScoresForOpportunities = async (profile, opportunities) => {
     const scorePromises = opportunities.map(async (each_op, index) => {
         if (!scoresExistArray[index]) {
             const new_score = await scoreOpportunityAgainstProfile(each_op, profile);
-            console.log(`For ${each_op.id} the new score is: `, new_score);
+            // console.log(`For ${each_op.id} the new score is: `, new_score);
             updatedBatchScores[`${getScoreId(profile.id, each_op.id)}`] = new_score; // Update the score for the opportunity ID
         } else {
-            console.log(`We already have a score for ${each_op.id}`);
-            console.log(`scoresExistArray[${index}]`, scoresExistArray[index])
+            // console.log(`We already have a score for ${each_op.id}`);
+            // console.log(`scoresExistArray[${index}]`, scoresExistArray[index])
             updatedBatchScores[`${getScoreId(profile.id, each_op.id)}`] = scoresExistArray[index]; // Update the score for the opportunity ID
         }
     });
