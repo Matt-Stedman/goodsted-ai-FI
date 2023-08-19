@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/goodsted-ai-FI/static/css/main.fd601003.css",
+    "main.js": "/goodsted-ai-FI/static/js/main.37b51220.js",
+    "static/js/787.4db2e051.chunk.js": "/goodsted-ai-FI/static/js/787.4db2e051.chunk.js",
+    "index.html": "/goodsted-ai-FI/index.html",
+    "main.fd601003.css.map": "/goodsted-ai-FI/static/css/main.fd601003.css.map",
+    "main.37b51220.js.map": "/goodsted-ai-FI/static/js/main.37b51220.js.map",
+    "787.4db2e051.chunk.js.map": "/goodsted-ai-FI/static/js/787.4db2e051.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.fd601003.css",
+    "static/js/main.37b51220.js"
+  ]
+}
